@@ -3,11 +3,6 @@
 # R translation by Dov Stekel
 # Funded by BBSRC BB/I001875/1
 
-## import data #####
-
-t = seq(0,18,2)
-promact = c(0.5382201,  5.7496800,  3.9200601,  2.9279040,  4.0482879,  7.5182181,  9.3344042, 12.2349156, 13.1094873, 15.6899308)
-temp = data.frame(t,promact)
 
 ## model ##########
 
@@ -58,8 +53,8 @@ ystarts = c(FMNH2=88,RCOOH=115.5,RCHO=115.5,Lux=0)
 # Some test values for switch function
 
 time = seq(0,999,1)
-PT_time_points = t
-PT_heights = promact
+PT_time_points = seq(0,1000,1)
+PT_heights = c(rep(0,100),rep(1,100),rep(0,801))
 
 
 # DEFINE MODEL FUNCTION
@@ -222,16 +217,3 @@ else {
 list(S_pos,out_heights,out_h_acc,LikDiff,Prop)
 } # end of function definition
 
-# attempts
-plot(PT_time_points,PT_heights)
-
-testing = lux_extended_sub_final(time,PT_time_points,PT_heights,luxparams,ystarts)
-testing_2 = MCMC_Prom_Activity(PT_time_points,PT_heights,NumIter=7000,frac=0.35,NORMFAC = 10000,Beta=1000,Sigma=0.01,Const_h=1)
-testing_3 = MCMC_Prom_Activity(PT_time_points,PT_heights,NumIter=10000,frac=0.35,NORMFAC = 10000,Beta=1000,Sigma=0.01,Const_h=1)
-
-# qplot(seq_along(testing_2[1]), testing_2[1])
-
-write.csv(testing_3[[2]],"D:/Users/George/Dropbox/UBC/iGEM/Modeling/testing_3.csv")
-
-#PLOT 5B
-plot(testing_3[[1]], testing_3[[2]][7000,])
